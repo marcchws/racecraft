@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+/* Track: chalk, ink and track red kept for effort and the one primary action. */
+@theme {
+  --color-canvas: #efebe4;
+  --color-chalk: #faf8f4;
+  --color-card: #ffffff;
+  --color-soft: #efebe4;
+  --color-shimmer: #f6f3ee;
+  --color-ink: #16171b;
+  --color-muted: #66625b;
+  --color-line: #e4dfd6;
+  --color-line-strong: #c9c3b8;
+  --color-red: #c93c24;
+  --color-red-soft: #f6e3dc;
+  --color-red-deep: #5e1f12;
+  --color-red-on-ink: #ffb3a3;
+  --color-good: #1f7a4d;
+  --color-good-soft: #e2f1e8;
+  --color-good-on-ink: #7fcb9f;
+  --color-hero: #16171b;
+  --color-hero-muted: #b9b4ab;
+  --color-hero-line: #34353b;
+  --color-hero-edge: #4a4a50;
+  --color-hero-num: #2a2b31;
+
+  --font-ui: 'Barlow', system-ui, sans-serif;
+  --font-display: 'Big Shoulders Display', 'Barlow', sans-serif;
+
+  --radius-card: 16px;
+  --radius-btn: 6px;
+  --shadow-toast: 0 8px 24px rgb(22 23 27 / 0.25);
+  --shadow-pop: 0 1px 2px rgb(22 23 27 / 0.06), 0 12px 32px rgb(22 23 27 / 0.14);
+
+  --breakpoint-desk: 1024px;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--color-chalk);
+    color: var(--color-ink);
+    font: 15px/1.45 var(--font-ui);
+    /* Barlow's tabular figures: every pace and time sets at the same width. */
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { cursor: pointer; }
+  button:disabled { cursor: default; }
+  :focus-visible { outline: 2px solid var(--color-red); outline-offset: 2px; }
+  .on-ink :focus-visible { outline-color: var(--color-red-on-ink); }
+}
+
+@layer components {
+  .disp { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; letter-spacing: 0; line-height: 0.95; }
+  .tag { display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1.2 var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+  .on-ink .tag, .on-ink .muted { color: var(--color-hero-muted); }
+  .muted { color: var(--color-muted); }
+  .card { background: var(--color-card); border: 1px solid var(--color-line); border-radius: var(--radius-card); padding: 16px; }
+  .card-ink { background: var(--color-hero); color: #fff; border-color: transparent; }
+
+  .btn {
+    height: 48px; border-radius: var(--radius-btn); border: 1px solid var(--color-line-strong); background: transparent; padding: 0 18px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 15px; white-space: nowrap; color: inherit;
+  }
+  .btn:hover:not(:disabled) { background: rgb(22 23 27 / 0.04); }
+  .on-ink .btn { border-color: var(--color-hero-edge); }
+  .on-ink .btn:hover:not(:disabled) { background: rgb(255 255 255 / 0.06); }
+  .btn-primary, .on-ink .btn-primary { background: var(--color-red); color: #fff; border-color: transparent; }
+  .btn-primary:hover:not(:disabled), .on-ink .btn-primary:hover:not(:disabled) { background: #b5361f; }
+  .btn-sm { height: 36px; font-size: 14px; padding: 0 12px; }
+  .btn[aria-busy='true'] { cursor: progress; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 8px; display: grid; place-items: center; color: inherit; }
+  .icon-btn:hover { background: rgb(22 23 27 / 0.06); }
+  .on-ink .icon-btn:hover { background: rgb(255 255 255 / 0.08); }
+
+  .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 99px; white-space: nowrap; }
+  .chip-today { background: var(--color-ink); color: #fff; }
+  .chip-done { background: var(--color-good-soft); color: var(--color-good); }
+  .chip-missed { background: var(--color-red-soft); color: var(--color-red-deep); }
+  .chip-plain { background: var(--color-soft); color: var(--color-ink); }
+
+  .spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 0.7s linear infinite; }
+  .sk { background: linear-gradient(90deg, var(--color-soft) 0 40%, var(--color-shimmer) 50%, var(--color-soft) 60% 100%); background-size: 300% 100%; animation: sk 1.4s linear infinite; border-radius: 8px; }
+
+  .seg { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 3px; gap: 2px; border-radius: 10px; background: var(--color-soft); }
+  .seg > button, .seg > a { height: 34px; padding: 0 14px; border-radius: 7px; font-weight: 600; font-size: 14px; color: var(--color-muted); display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; }
+  .seg > [aria-pressed='true'], .seg > [aria-current='page'], .seg > [aria-checked='true'] { background: var(--color-card); color: var(--color-ink); box-shadow: 0 1px 2px rgb(22 23 27 / 0.1); }
+
+  .field { display: grid; gap: 6px; }
+  .field > label, .field-label { font-weight: 600; font-size: 14px; }
+  .input {
+    height: 48px; border-radius: var(--radius-btn); border: 1px solid var(--color-line-strong); background: var(--color-card); padding: 0 14px; font-size: 16px; color: var(--color-ink); width: 100%;
+  }
+  .input[aria-invalid='true'] { border-color: var(--color-red); box-shadow: 0 0 0 1px var(--color-red); }
+  .err { display: flex; gap: 6px; align-items: start; color: var(--color-red-deep); font-size: 14px; }
+}
+
+@keyframes spin { to { transform: rotate(1turn); } }
+@keyframes sk { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+.grow { transform-box: fill-box; transform-origin: bottom; animation: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.draw-line { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); animation: draw 0.6s ease-out forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spin, .sk { animation: none; }
+  .grow, .draw-line, [data-anim] { animation: none !important; stroke-dashoffset: 0 !important; }
+}
